@@ -5,9 +5,6 @@ namespace DAL;
 
 public class ConfigRepositoryJson : IConfigRepository
 {
-
-    private readonly string _basePath = Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile)
-                                        + Path.DirectorySeparatorChar + "tic-tac-toe" + Path.DirectorySeparatorChar;
     
     
     public List<string> GetConfigurationNames()
@@ -17,7 +14,7 @@ public class ConfigRepositoryJson : IConfigRepository
         
         var res = new List<string>();
         
-        foreach (var fullFileName in System.IO.Directory.GetFiles(_basePath, "*.config.json").ToList())
+        foreach (var fullFileName in System.IO.Directory.GetFiles(FileHelper.BasePath, "*" + FileHelper.ConfigExtension).ToList())
         {
             var fileNameParts = System.IO.Path.GetFileNameWithoutExtension(fullFileName);
             var primaryName = System.IO.Path.GetFileNameWithoutExtension(fileNameParts);
@@ -29,19 +26,19 @@ public class ConfigRepositoryJson : IConfigRepository
 
     public GameConfiguration GetConfigurationByName(string name)
     {
-        var configJsonStr = System.IO.File.ReadAllText(_basePath + name + ".config.json");
+        var configJsonStr = System.IO.File.ReadAllText(FileHelper.BasePath + name + FileHelper.ConfigExtension);
         var config = JsonSerializer.Deserialize<GameConfiguration>(configJsonStr);
         return config;
     }
 
     private void CheckAndCreateInitialConfig()
     {
-        if (!Directory.Exists(_basePath))
+        if (!Directory.Exists(FileHelper.BasePath))
         {
-            Directory.CreateDirectory(_basePath);
+            Directory.CreateDirectory(FileHelper.BasePath);
         }
         
-        var data = System.IO.Directory.GetFiles(_basePath, "*.config.json").ToList();
+        var data = System.IO.Directory.GetFiles(FileHelper.BasePath, "*" + FileHelper.ConfigExtension).ToList();
 
         if (data.Count == 0)
         {
@@ -51,8 +48,25 @@ public class ConfigRepositoryJson : IConfigRepository
             {
                 var gameOption = hardcodedRepo.GetConfigurationByName(optionName);
                 var optionJsonStr = JsonSerializer.Serialize(gameOption);
-                File.WriteAllText(_basePath + gameOption.Name + ".config.json", optionJsonStr);
+                File.WriteAllText(FileHelper.BasePath + gameOption.Name + FileHelper.ConfigExtension, optionJsonStr);
             }
         }
+    }
+    
+    public void SaveCustomConfiguration(GameConfiguration configuration)
+    {
+        CheckAndCreateInitialConfig();
+
+        var filePath = FileHelper.BasePath + configuration.Name + FileHelper.ConfigExtension;
+        
+        if (File.Exists(filePath))
+        {
+            Console.WriteLine("Configuration with this name already exists.");
+            return;
+        }
+
+        var configJsonStr = JsonSerializer.Serialize(configuration, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(filePath, configJsonStr);
+        Console.WriteLine("Custom configuration saved successfully.");
     }
 }

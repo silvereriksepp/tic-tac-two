@@ -1,0 +1,25 @@
+﻿@page
+@model WebApp.Pages.NewGameMenu
+
+@{ ViewData["Title"] = "New Game"; }
+
+<form asp-page="./MenuController"
+      method="post"
+      class="form-horizontal">
+    <input type="hidden" name="Cmd" value="pvp"/>
+    <input type="submit" value="Player vs Player"/>
+</form>
+<form asp-page="./MenuController"
+      method="post"
+      class="form-horizontal">
+    <input type="hidden" name="Cmd" value="ai"/>
+    <input type="submit" value="Player vs AI"/>
+    Not Ready
+</form>
+<form asp-page="./MenuController"
+      method="post"
+      class="form-horizontal">
+    <input type="hidden" name="Cmd" value="ai2"/>
+    <input type="submit" value="AI vs AI"/>
+    Not Ready
+</form>

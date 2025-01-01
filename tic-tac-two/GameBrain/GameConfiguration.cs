@@ -12,12 +12,13 @@ public record struct GameConfiguration()
     
     //0 disabled
     public int MovePieceAfterNMoves { get; set; } = 0;
-    public int InitialGridCenterX { get; set; } = 2;
-    public int InitialGridCenterY { get; set; } = 2;
+    public int InitialGridTopLeftX { get; set; } = 1;
+    public int InitialGridTopLeftY { get; set; } = 1;
     public int MaxGamePieces { get; set; } = 4;
+    public int GridSize { get; set; } = 3;
 
 
     public override string ToString() =>
         $"Board {BoardSizeWidth}x{BoardSizeHeight}, to win: {WinCondition}, can move pieces after: {MovePieceAfterNMoves}," +
-        $" Initial grid center: ({InitialGridCenterX}, {InitialGridCenterY})";
+        $" Initial grid center: ({InitialGridTopLeftX}, {InitialGridTopLeftY})";
 }

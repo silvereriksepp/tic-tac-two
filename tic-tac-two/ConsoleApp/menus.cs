@@ -1,4 +1,7 @@
-﻿using MenuSystem;
+﻿using DAL;
+using Domain;
+using MenuSystem;
+using Microsoft.EntityFrameworkCore;
 
 namespace ConsoleApp;
 
@@ -31,18 +34,72 @@ public static class menus
         "Tic-Tac-Two", [
             new MenuItem()
             {
-                Shortcut = "O",
-                Title = "Options",
-                MenuItemAction = OptionsMenu.Run
-            },
-
-            new MenuItem()
-            {
                 Shortcut = "N",
                 Title = "New Game",
-                MenuItemAction = GameController.MainLoop
+                MenuItemAction = () => GameController.MainLoop()
+            },
+            new MenuItem()
+            {
+                Shortcut = "L",
+                Title = "Load Game",
+                MenuItemAction = LoadGameMenu.Run
+            },
+            new MenuItem()
+            {
+                Shortcut = "C",
+                Title = "Create New Configuration",
+                MenuItemAction = () => {
+                    GameController.CreateNewGameConfiguration();
+                    return string.Empty;
+                }
             }
         ]);
+    
+    public static Menu LoadGameMenu
+    {
+        
+        get
+        {
+            var connectionString = $"Data Source={FileHelper.BasePath}app.db";
+
+            var contextOptions = new DbContextOptionsBuilder<AppDbContext>()
+                .UseSqlite(connectionString)
+                .EnableDetailedErrors()
+                .EnableSensitiveDataLogging()
+                .Options;
+
+            using var ctx = new AppDbContext(contextOptions);
+            
+            var dbSaves = new GameRepositoryDb(ctx).GetGamesList();
+            
+            var saveFiles = Directory.GetFiles(FileHelper.BasePath, "*" + FileHelper.GameExtension).
+                ToList();
+
+            var index = 0;
+            var menuItems = saveFiles.Select((file, index) => new MenuItem
+            {
+                Shortcut = index.ToString(),
+                Title = Path.GetFileName(file),
+                MenuItemAction = () => GameController.LoadGame(file)
+            }).ToList();
+
+            foreach (var game in dbSaves)
+            {
+                menuItems.Add(new MenuItem
+                {
+                    Shortcut = (menuItems.Count + index).ToString(),
+                    Title = game.CreatedAtDateTime,
+                    MenuItemAction = () => GameController.LoadGameDb(game.State)
+                });
+            }
+
+            return new Menu(
+                EMenuLevel.Secondary,
+                "Load Game",
+                menuItems
+            );
+        }
+    }
     
     public static string DummyMethod()
     {
@@ -51,22 +108,4 @@ public static class menus
         Console.WriteLine();
         return "foobar";
     }
-    
-    public static Menu CustomRulesMenu = new Menu(
-        EMenuLevel.Deep,
-        "Tic-Tac-Two Custom Rules Menu", [
-            new MenuItem()
-            {
-                Shortcut = "1",
-                Title = "Board Size",
-                MenuItemAction = OptionsMenu.Run
-            },
-
-            new MenuItem()
-            {
-                Shortcut = "N",
-                Title = "New Game",
-                MenuItemAction = GameController.MainLoop
-            }
-        ]);
 }

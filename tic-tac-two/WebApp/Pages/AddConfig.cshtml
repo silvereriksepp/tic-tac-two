@@ -1,0 +1,41 @@
+﻿@page
+@model WebApp.Pages.AddConfig
+
+@{ ViewData["Title"] = "Add Config"; }
+
+<form method="post" class="form-horizontal">
+    <label for="@Model.Name">Config Name: </label>
+    <input asp-for="Name"/>
+    <br/>
+    <label for="@Model.BoardWidth">Board Width: </label>
+    <input asp-for="BoardWidth"/>
+    <br/>
+    <label for="@Model.BoardHeight">Board Height: </label>
+    <input asp-for="BoardHeight"/>
+    <br/>
+    <label for="@Model.GridSize">Grid Size: </label>
+    <input asp-for="GridSize"/>
+    <br/>
+    <label for="@Model.WindCondition">Pieces in a row to win: </label>
+    <input asp-for="WindCondition"/>
+    <br/>
+    <label for="@Model.MaxGamePieces">Amount of pieces: </label>
+    <input asp-for="MaxGamePieces"/>
+    <br/>
+    <label for="@Model.MovePieceAfterNMoves">After how many moves can pieces be moved: </label>
+    <input asp-for="MovePieceAfterNMoves"/>
+    <br/>
+    <label for="@Model.InitialGridTopLeftX">Initial top-left X coordinate of grid: </label>
+    <input asp-for="InitialGridTopLeftX"/>
+    <br/>
+    <label for="@Model.InitialGridTopLeftY">Initial top-left Y coordinate of grid: </label>
+    <input asp-for="InitialGridTopLeftY"/>
+    <br/>
+    <input type="submit" value="Start"/>
+
+    @foreach (var message in Model.Messages)
+    {
+        <br/>
+        @message
+    }
+</form>

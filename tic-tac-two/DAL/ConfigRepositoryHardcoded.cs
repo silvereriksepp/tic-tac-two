@@ -8,18 +8,7 @@ public class ConfigRepositoryHardcoded : IConfigRepository
     {
         new GameConfiguration()
         {
-            Name = "Classical",
-            
-        },
-        new GameConfiguration()
-        {
-            Name = "Custom Rules",
-            BoardSizeWidth = 5,
-            BoardSizeHeight = 5,
-            WinCondition = 3,
-            MovePieceAfterNMoves = 2,
-            InitialGridCenterX = 2,
-            InitialGridCenterY = 2
+            Name = "Classical Tic-Tac-Two"
         }
     };
 

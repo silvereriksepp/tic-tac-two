@@ -1,6 +1,8 @@
-﻿namespace DAL;
+﻿using GameBrain;
+
+namespace DAL;
 
 public interface IGameRepository
 {
-    public void SaveGame();
+    public void SaveGame(string jsonStateName, string gameConfigName);
 }

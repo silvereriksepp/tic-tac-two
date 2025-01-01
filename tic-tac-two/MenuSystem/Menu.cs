@@ -74,7 +74,7 @@ public class Menu
 
             if (menuItem.Shortcut == _menuItemReturn.Shortcut)
             {
-                return menuItem.Shortcut;
+                return string.Empty;
             }
             if (menuItem.Shortcut == _menuItemExit.Shortcut || menuReturnValue == _menuItemExit.Shortcut)
             {

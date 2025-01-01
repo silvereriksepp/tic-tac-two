@@ -1,0 +1,36 @@
+﻿@page
+@model IndexModel
+
+@{ ViewData["Title"] = "Main Menu"; }
+
+<form asp-page="./MenuController"
+      method="post"
+      class="form-horizontal">
+    <input type="hidden" name="Cmd" value="new"/>
+    <input type="submit" value="New Game"/>
+</form>
+<form asp-page="./MenuController"
+      method="post"
+      class="form-horizontal">
+    <input type="hidden" name="Cmd" value="load"/>
+    <input type="submit" value="Load A Saved AI Game"/>
+    Not Ready
+</form>
+<form asp-page="./MenuController"
+      method="post"
+      class="form-horizontal">
+    <input type="hidden" name="Cmd" value="join"/>
+    <input type="submit" value="Join A Game"/>
+</form>
+<form asp-page="./MenuController"
+      method="post"
+      class="form-horizontal">
+    <input type="hidden" name="Cmd" value="config"/>
+    <input type="submit" value="New Configuration"/>
+</form>
+<form asp-page="./MenuController"
+      method="post"
+      class="form-horizontal">
+    <input type="hidden" name="Cmd" value="rules"/>
+    <input type="submit" value="Rules"/>
+</form>
