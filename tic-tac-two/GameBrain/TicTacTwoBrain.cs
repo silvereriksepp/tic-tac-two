@@ -2,12 +2,6 @@
 
 public class TicTacTwoBrain
 {
-    //RULES:
-    //SQUARE BOARD, ANY SIZE
-    //GRID STARTS IN THE MIDDLE, ANY SIZE
-    //ANY NUM PIECES EACH, DEFAULT 4
-    //CAN CHANGE PIECE LOCATION AFTER 2 PIECES
-    //
 
     public GameConfiguration GameConfiguration;
     public GameState _gameState;
@@ -37,6 +31,22 @@ public class TicTacTwoBrain
     public string GetConfigName()
     {
         return _gameState.GameConfiguration.Name;
+    }
+    
+    public void SetPasswords(string x, string o)
+    {
+        _gameState.OPass = o;
+        _gameState.XPass = x;
+    }
+
+    public void SetName(string name)
+    {
+        _gameState.Name = name;
+    }
+    
+    public void SetAi(bool b)
+    {
+        _gameState.Ai = b;
     }
 
     public EGamePiece[][] GameBoard

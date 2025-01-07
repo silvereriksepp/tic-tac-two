@@ -20,8 +20,6 @@ public class AddConfig : PageModel
     [BindProperty]
     public int BoardWidth { get; set; } = 5;
     [BindProperty]
-    public int BoardHeight { get; set; } = 5;
-    [BindProperty]
     public int GridSize { get; set; } = 3;
     [BindProperty]
     public int MaxGamePieces { get; set; } = 5;
@@ -30,9 +28,9 @@ public class AddConfig : PageModel
     [BindProperty]
     public int MovePieceAfterNMoves { get; set; } = 1;
     [BindProperty] 
-    public int InitialGridTopLeftX { get; set; } = 0;
+    public int InitialGridTopLeftX { get; set; } = 1;
     [BindProperty] 
-    public int InitialGridTopLeftY { get; set; } = 0;
+    public int InitialGridTopLeftY { get; set; } = 1;
     public List<string> Messages { get; set; } = new List<string>();
 
     public void OnGet()
@@ -46,14 +44,14 @@ public class AddConfig : PageModel
             Messages.Add("Name can't be empty!");
         }
 
-        if (BoardWidth < 3 || BoardHeight < 3)
+        if (BoardWidth < 3)
         {
             Messages.Add("Minimal board size is 3 x 3");
         }
 
-        if (GridSize < 3 || GridSize < 3 || GridSize > BoardWidth || GridSize > BoardHeight)
+        if (GridSize < 3 || GridSize > BoardWidth)
         {
-            Messages.Add($"Minimal grid size is 3 x 3 and maximal size is {BoardWidth} x {BoardHeight}");
+            Messages.Add($"Minimal grid size is 3 and maximal size is {BoardWidth}");
         }
 
         if (WindCondition < 3)
@@ -77,7 +75,7 @@ public class AddConfig : PageModel
         {
             Name = Name,
             BoardSizeWidth = BoardWidth,
-            BoardSizeHeight = BoardHeight,
+            BoardSizeHeight = BoardWidth,
             WinCondition = WindCondition,
             MovePieceAfterNMoves = MovePieceAfterNMoves,
             InitialGridTopLeftX = InitialGridTopLeftX,

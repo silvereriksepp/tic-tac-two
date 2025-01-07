@@ -61,8 +61,13 @@ public class ConfigRepositoryDb : IConfigRepository
                 {
                     Name = config.Name,
                     BoardWidth = config.BoardSizeWidth,
-                    BoardHeight = config.BoardSizeHeight
-                    // Add other properties here if needed, 
+                    BoardHeight = config.BoardSizeHeight,
+                    WindCondition = config.WinCondition,
+                    MovePieceAfterNMoves = config.MovePieceAfterNMoves,
+                    InitialGridTopLeftX = config.InitialGridTopLeftX,
+                    InitialGridTopLeftY = config.InitialGridTopLeftY,
+                    MaxGamePieces = config.MaxGamePieces,
+                    GridSize = config.GridSize
                 };
 
                 _context.Configurations.Add(configEntity);

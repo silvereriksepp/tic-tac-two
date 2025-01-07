@@ -26,8 +26,7 @@ public static class menus
                 },
             ]);
 
-
-
+    
 
     public static Menu MainMenu = new Menu(
         EMenuLevel.Main,
@@ -72,8 +71,15 @@ public static class menus
             
             var dbSaves = new GameRepositoryDb(ctx).GetGamesList();
             
+            
             var saveFiles = Directory.GetFiles(FileHelper.BasePath, "*" + FileHelper.GameExtension).
                 ToList();
+            
+            if (dbSaves.Count == 0 && saveFiles.Count == 0)
+            {
+                return new Menu(EMenuLevel.Secondary, "No Saved games Found",
+                    new List<MenuItem> { new MenuItem { Title = "no saves", Shortcut = " " } });
+            }
 
             var index = 0;
             var menuItems = saveFiles.Select((file, index) => new MenuItem
