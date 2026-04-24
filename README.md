@@ -1,4 +1,1 @@
-name: Silver Erik Sepp
-uni-id: 233638IADB
-email: sisepl@taltech.ee
-student-code: sisepl
+A TicTacTwo game in C#. Works in Terminal, but web part is unfinished.
